@@ -4,6 +4,7 @@ import http from "http";
 import cors from "cors";
 import dotenv from "dotenv";
 import { v4 as UUIDv4 } from "uuid";
+import axios from "axios";
 
 dotenv.config();
 
@@ -305,6 +306,23 @@ io.on("connection", (socket) => {
         }
     });
 });
+
+app.get("/", (req, res) => {
+    res.send("Server is running");
+});
+
+const interval = 30000;
+
+const reloadServer = async () => {
+    try {
+        const response = await axios.get(process.env.BACKEND_URL!);
+        console.log("Server reloaded:", response.data);
+    } catch (error: any) {
+        console.log("Error:", error.message);
+    }
+};
+
+setInterval(reloadServer, interval);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
