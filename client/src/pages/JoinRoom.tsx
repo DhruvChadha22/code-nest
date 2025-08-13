@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Mic, MicOff, TriangleAlert, Video, VideoOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import axios from "axios";
 
 const JoinRoom = () => {
     const [roomId, setRoomId] = useState<string>("");
@@ -33,18 +34,23 @@ const JoinRoom = () => {
         const id = UUIDv4();
         setUserId(id);
 
-        const newPeer = new Peer(id, {
-            config: {
-                "iceServers": [
-                    { urls: "stun:stun.l.google.com:19302" },
-                    { urls: "stun:stun.l.google.com:5349" },
-                    { urls: "stun:stun1.l.google.com:3478" },
-                    { urls: "stun:stun1.l.google.com:5349" },
-                ],
-            },
-        });
-        setPeer(newPeer);
+        const setupPeer = async () => {
+            try {
+                const response = await axios.get(`https://code-nest.metered.live/api/v1/turn/credentials?apiKey=${import.meta.env.VITE_TURN_SERVER_API_KEY}`);
+                const iceServers = response.data;
 
+                const newPeer = new Peer(id, {
+                    config: {
+                        iceServers,
+                    },
+                });
+                setPeer(newPeer);
+            } catch (e) {
+                console.log(e);
+            }
+        };
+
+        setupPeer();
         fetchUserMedia();
 
         socket.on("room-created", joinNewRoom);
