@@ -5,7 +5,7 @@ import CodeEditor from "@/components/CodeEditor";
 import MediaGrid from "@/components/MediaGrid";
 import DrawingBoard from "@/components/DrawingBoard";
 import { Button } from "@/components/ui/button";
-import { Code2, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useLocalPeer } from "@/store/useLocalPeer";
@@ -50,18 +50,22 @@ const Room = () => {
     return (
         <div className="w-screen h-screen bg-[#101636] text-white flex flex-col">
             <header className="bg-[#080E28] px-4 py-3 flex items-center justify-between shadow-lg">
-                <a href="/" className="flex items-center space-x-2">
-                    <Code2 className="h-8 w-8 text-blue-500" />
-                    <span className="text-xl font-bold">CodeNest</span>
+                <a href="/">
+                    <img
+                        src="/logo-with-name.svg"
+                        width={140}
+                        height={55}
+                        alt="logo"    
+                    />
                 </a>
                 <Button
                     size="sm"
                     onClick={copyRoomId}
                     disabled={hasCopied}
-                    className="bg-[#256ddb] hover:bg-[#2161c2] hover:cursor-pointer text-white"
+                    className="bg-[linear-gradient(#283dbd,#386BE8)] border-2 border-[#0C1838] hover:border-[#2EF2FF] transition-all duration-500 hover:cursor-pointer text-white text-semibold"
                 >
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy Room ID
+                    <Copy className="size-3 sm:size-4 mr-1 stroke-3" />
+                    <span className="text-xs sm:text-sm">Copy Room ID</span>
                 </Button>
             </header>
 

@@ -286,19 +286,19 @@ const CodeEditor = ({ roomId }: { roomId?: string }) => {
             <div className="flex flex-col gap-2 p-4 lg:pr-0 h-screen lg:h-[calc(100vh-130px)] w-full lg:w-2/3 mb-6 lg:mb-0">
                 <div className="flex flex-col sm:flex-row justify-start gap-2 sm:gap-8">
                     <div className="flex items-center gap-3">
-                        <span className="text-md text-gray-200">Language:</span>
+                        <span className="text-md font-semibold text-gray-300">Language:</span>
                         <Select
                             value={language}
                             onValueChange={(value) => handleLanguageChange(value)}
                         >
-                            <SelectTrigger className="w-[120px] lg:w-[180px] rounded-md font-normal text-white bg-[#080E28]/50 hover:bg-[#080E28]/70 border-none focus:ring-offset-0 focus:ring-transparent outline-none focus:bg-[#080E28]/80 cursor-pointer transition">
+                            <SelectTrigger className="w-[120px] lg:w-[180px] rounded-md font-normal text-white text-[16px] bg-[#080E28]/50 hover:bg-[#080E28]/70 border-none focus:ring-offset-0 focus:ring-transparent outline-none focus:bg-[#080E28]/80 cursor-pointer transition">
                                 <SelectValue placeholder="Select language" />
                             </SelectTrigger>
                             <SelectContent className="bg-[#080E28] border-none text-white font-semibold">
                                 <SelectGroup>
-                                    <SelectLabel className="text-slate-300">Language</SelectLabel>
+                                    <SelectLabel className="text-slate-300 text-[14px]">Language</SelectLabel>
                                     {languageOptions.map(({ value, label }) => (
-                                        <SelectItem key={value} value={value}>
+                                        <SelectItem key={value} value={value} className="text-[15px]">
                                         {label}
                                         </SelectItem>
                                     ))}
@@ -307,22 +307,22 @@ const CodeEditor = ({ roomId }: { roomId?: string }) => {
                         </Select>
                     </div>
                     <div className="flex items-center gap-3">
-                        <span className="text-md text-gray-200">Font Size:</span>
+                        <span className="text-md font-semibold text-gray-300">Font Size:</span>
                         <Select
                             defaultValue="15"
                             value={fontSize}
                             onValueChange={(value) => setFontSize(value)}
                         >
-                            <SelectTrigger className="w-[100px] rounded-md font-normal text-white bg-[#080E28]/50 hover:bg-[#080E28]/70 border-none focus:ring-offset-0 focus:ring-transparent outline-none focus:bg-[#080E28]/80 cursor-pointer transition">
+                            <SelectTrigger className="w-[100px] rounded-md font-normal text-white text-[16px] bg-[#080E28]/50 hover:bg-[#080E28]/70 border-none focus:ring-offset-0 focus:ring-transparent outline-none focus:bg-[#080E28]/80 cursor-pointer transition">
                                 <SelectValue placeholder="Select font-size" />
                             </SelectTrigger>
                             <SelectContent className="bg-[#080E28] border-none text-white font-semibold h-[200px]">
                                 <SelectGroup>
-                                    <SelectLabel className="text-slate-300">Font Size</SelectLabel>
+                                    <SelectLabel className="text-slate-300 text-[14px]">Font Size</SelectLabel>
                                     {Array.from({ length: 10 }, (_, i) => {
                                         const size = (12 + i).toString();
                                         return (
-                                            <SelectItem key={size} value={size}>
+                                            <SelectItem key={size} value={size} className="text-[15px] hover:bg-blue-400">
                                                 {size}px
                                             </SelectItem>
                                         );
@@ -354,38 +354,38 @@ const CodeEditor = ({ roomId }: { roomId?: string }) => {
             <div className="flex flex-col lg:mt-4 h-full w-full lg:w-1/3 lg:max-w-1/3">
                 <div className="p-4 flex-1 flex flex-col h-full w-full max-w-full gap-4">
                     <div className="flex-1 flex flex-col h-2/5 max-h-2/5 w-full max-w-screen lg:max-w-full">
-                        <label className="text-md font-medium text-gray-300 mb-2">Input</label>
+                        <label className="text-lg font-semibold text-gray-300 mb-2">Input</label>
                         <Textarea
                             value={input}
                             onChange={(e) => handleInputChange(e.target.value)}
                             placeholder="Enter input here..."
-                            className="flex-1 bg-[#011627] border-[#070D27] text-white placeholder-muted resize-none max-w-full max-h-full"
+                            className="flex-1 bg-[#011627] border-[#070D27] text-white md:text-[16px] placeholder-muted resize-none max-w-full max-h-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full"
                         />
                     </div>
 
                     <div className="flex-1 flex flex-col mt-4 h-2/5 max-h-2/5 max-w-screen lg:max-w-full">
-                        <label className="text-md font-medium text-gray-300 mb-2">Output</label>
+                        <label className="text-lg font-semibold text-gray-300 mb-2">Output</label>
                         <Textarea
                             value={output}
                             readOnly
                             placeholder="Output will appear here..."
-                            className="flex-1 bg-[#011627] border-[#070D27] text-white placeholder-muted resize-none max-w-full max-h-full"
+                            className="flex-1 bg-[#011627] border-[#070D27] text-white md:text-[16px] placeholder-muted resize-none max-w-full max-h-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full"
                         />
                     </div>
 
                     <Button
                         onClick={executeCode}
                         disabled={isOutputLoading}
-                        className="w-full bg-green-600 hover:bg-green-700 text-white transition-colors cursor-pointer"
+                        className="w-full bg-green-600 hover:bg-green-700 text-white text-md font-semibold transition-colors cursor-pointer"
                     >
                         {isOutputLoading ? (
                             <>
-                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                <Loader2 className="h-4 w-4 mr-2 stroke-3 animate-spin" />
                                 Running Code...
                             </>
                         ) : (
                             <>
-                                <Play className="h-4 w-4 mr-2" />
+                                <Play className="h-4 w-4 mr-2 stroke-3" />
                                 Run Code
                             </>
                         )}

@@ -19,6 +19,7 @@ const JoinRoom = () => {
     const [roomId, setRoomId] = useState<string>("");
     const [isLoadingStream, setIsLoadingStream] = useState<boolean>(true);
     const [mediaStreamError, setMediaStreamError] = useState<string>("");
+    const [isCreatingRoom, setIsCreatingRoom] = useState<boolean>(false);
     const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);
     const [formError, setFormError] = useState<string>("");
 
@@ -140,7 +141,7 @@ const JoinRoom = () => {
         }
         
         setFormError("");
-        setIsJoiningRoom(true);
+        setIsCreatingRoom(true);
         socket.emit("create-room");
     };
 
@@ -149,7 +150,7 @@ const JoinRoom = () => {
 
         if (username.trim() === "") {
             setFormError("Username is required");
-            setIsJoiningRoom(false);
+            setIsCreatingRoom(false);
             return;
         }
 
@@ -175,6 +176,7 @@ const JoinRoom = () => {
 
     const enterRoom = ({ roomId }: { roomId: string }) => {
         hasJoinedRoomRef.current = true;
+        setIsCreatingRoom(false);
         setIsJoiningRoom(false);
 
         toast.success("Room Joined!", {
@@ -205,10 +207,11 @@ const JoinRoom = () => {
     };
 
     return (
-        <div className="min-h-screen min-w-screen bg-[#080E28] flex flex-col justify-center items-center gap-4">
-            <Card className="w-xs sm:w-sm bg-[#101636] border-none">
+        <div className="relative z-10 min-h-screen w-full bg-[#080E28] flex flex-col justify-center items-center gap-4">
+            <div className="absolute top-1/6 left-1/8 z-0 bg-[radial-gradient(circle_at_center,#273773,#080D27)] blur-3xl size-3/4 rounded-full overflow-hidden" />
+            <Card className="relative z-10 w-xs sm:w-sm bg-[#101636] border-none">
                 <CardHeader className="flex flex-col items-center justify-center">
-                    <CardTitle className="text-xl text-white">Join Room</CardTitle>
+                    <CardTitle className="text-xl font-bold text-white">Join Room</CardTitle>
                     <CardDescription className="text-gray-300">
                         Create new room or join an existing one
                     </CardDescription>
@@ -219,7 +222,7 @@ const JoinRoom = () => {
                             {isLoadingStream ? (
                                 <div className="w-xs lg:w-sm flex items-center justify-center">
                                     <div className="w-2/3 mb-6">
-                                        <div className="bg-[#283061] flex items-center justify-center rounded-lg w-[210px] lg:w-[calc(100%-3px)] h-[130px] lg:h-[calc(1/5*100vh-8px)]">
+                                        <div className="bg-[#283061] flex items-center justify-center rounded-lg max-lg:w-[210px] max-lg:h-[130px] aspect-video">
                                             <Loader2 className="size-10 stroke-[#256ddb] animate-spin" />
                                         </div>
                                     </div>
@@ -268,25 +271,25 @@ const JoinRoom = () => {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="username">Username</Label>
+                            <Label htmlFor="username" className="text-lg">Username</Label>
                             <Input
                                 id="username"
                                 type="text"
                                 placeholder="Enter Username"
                                 onChange={e => setUsername(e.target.value)}
                                 disabled={isJoiningRoom}
-                                className="border-[#256DDB] focus-visible:border-[#256DDB] focus-visible:ring-[#283061]"
+                                className="md:text-[16px] border-[#256DDB] focus-visible:border-[#256DDB] focus-visible:ring-[#283061]"
                                 required
                             />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="roomId">Room ID</Label>
+                            <Label htmlFor="roomId" className="text-lg">Room ID</Label>
                             <Input
                                 id="roomId"
                                 type="text" 
                                 placeholder="Enter Room ID"
                                 disabled={isJoiningRoom}
-                                className="border-[#256DDB] focus-visible:border-[#256DDB] focus-visible:ring-[#283061]"
+                                className="md:text-[16px] border-[#256DDB] focus-visible:border-[#256DDB] focus-visible:ring-[#283061]"
                                 onChange={e => setRoomId(e.target.value)}
                             />
                         </div>
@@ -301,9 +304,9 @@ const JoinRoom = () => {
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
                     <Button 
-                        className="w-full hover:cursor-pointer"
+                        className="w-full text-md font-bold bg-[linear-gradient(#283dbd,#386BE8)] border-2 border-[#0C1838] hover:border-[#2EF2FF] transition-all duration-500 hover:cursor-pointer"
                         onClick={joinExistingRoom}
-                        disabled={isLoadingStream || isJoiningRoom || !!mediaStreamError}
+                        disabled={isLoadingStream || isJoiningRoom || isCreatingRoom || !!mediaStreamError}
                     >
                         {isJoiningRoom ? (
                             <>
@@ -317,19 +320,18 @@ const JoinRoom = () => {
                         )}
                     </Button>
                     <Button 
-                        variant="secondary" 
-                        className="w-full hover:cursor-pointer"
+                        className="w-full text-md font-bold bg-[linear-gradient(#253575,#162561)] border-2 border-[#0C1838] hover:border-[#2EF2FF] transition-all duration-500 hover:cursor-pointer"
                         onClick={initRoom}
-                        disabled={isLoadingStream || isJoiningRoom || !!mediaStreamError}
+                        disabled={isLoadingStream || isJoiningRoom || isCreatingRoom || !!mediaStreamError}
                     >
-                        {isJoiningRoom ? (
+                        {isCreatingRoom ? (
                             <>
                                 <Loader2 className="size-4 mr-2 animate-spin" />
                                 Creating Room...
                             </>
                         ) : (
                             <>
-                                Create a new Room
+                                Create a New Room
                             </>
                         )}
                     </Button>

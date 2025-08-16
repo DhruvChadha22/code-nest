@@ -180,7 +180,7 @@ const MediaGrid = ({ roomId }: { roomId?: string }) => {
         <div className="w-full bg-[#101636] flex flex-col border-b-2 border-b-[#080E28] lg:border-b-0 lg:border-r-2 lg:border-r-[#080E28]">
             <div className="flex-1 w-full px-4 pt-2 pb-6">
                 <h3 className="h-fit text-lg font-medium text-gray-300 mb-4 hidden lg:block">Participants</h3>
-                <div className="flex lg:flex-col gap-3 overflow-x-auto w-full lg:h-[calc(100vh-204px)]">
+                <div className="flex lg:flex-col gap-3 overflow-x-auto w-full lg:h-[calc(100vh-204px)] [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full">
                     <MediaPlayer 
                         stream={localStream} 
                         username={username} 

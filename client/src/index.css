@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-html { 
-  scroll-behavior: smooth;
-}
-
 *::-webkit-scrollbar {
   height: calc(var(--spacing) * 2);
 }
@@ -19,14 +15,6 @@ html {
 
 *::-webkit-scrollbar-thumb {
   background-color: #283061;
-}
-
-*::-webkit-scrollbar-track {
-  border-radius: calc(infinity * 1px);
-}
-
-*::-webkit-scrollbar-thumb {
-  border-radius: calc(infinity * 1px);
 }
 
 @custom-variant dark (&:is(.dark *));
