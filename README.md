@@ -10,11 +10,11 @@ Whether you’re preparing for interviews, practicing Data Structures & Algorith
 ---
 
 ## Table of Contents
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [How It Works](#-how-it-works)
-- [User Interface](#-user-interface)
-- [Highlights](#-highlights)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [How It Works](#how-it-works)
+- [User Interface](#user-interface)
+- [Highlights](#highlights)
 
 ---
 
